@@ -16,8 +16,8 @@ Kelas IF-49-REG10 · Semester Ganjil 2026/2027
 
 | No | Nama | NIM | GitHub |
 |----|------|-----|--------|
-| 1 | Jefri Muhammad Rasyad    | 103012500254 | (isi username) |
-| 2 | Althaf Tristan Maheswara | 103012500094 | (isi username) |
+| 1 | Jefri Muhammad Rasyad    | 103012500254 | Jefmrd         |
+| 2 | Althaf Tristan Maheswara | 103012500094 | AlthafTM       |
 | 3 | Muhammad Reffy Lesmana   | 103012500062 | reffylesmana   |
 
 ## Fitur
