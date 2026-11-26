@@ -41,20 +41,25 @@ Menyusul.
 
 ```text
 Tubes_STD_KelompokYoNdakTau_IF-49-10/
+├── .gitignore
 ├── LICENSE
 ├── README.md
-└── src/
-    ├── main.cpp
-    ├── mll.cpp
-    └── mll.h
+├── Tubes_STD_KelompokYoNdakTau_IF-49-10.cbp
+├── main.cpp
+├── mll.cpp
+└── mll.h
 ```
 
 ## Cara Menjalankan
 
-Implementasi program masih dalam tahap pengembangan. Setelah selesai, program bisa dikompilasi dan dijalankan dengan `g++`:
+### Menggunakan Code::Blocks
+1. Download ZIP atau clone repository ini, lalu ekstrak jika menggunakan ZIP.
+2. Buka file `Tubes_STD_KelompokYoNdakTau_IF-49-10.cbp` menggunakan Code::Blocks.
+3. Setelah kode selesai diimplementasikan, klik **Build and Run** (`F9`).
 
+### Menggunakan Terminal (`g++`)
 ```bash
-g++ src/main.cpp src/mll.cpp -o main
+g++ main.cpp mll.cpp -o main
 ./main
 ```
 

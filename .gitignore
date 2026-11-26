@@ -1,0 +1,7 @@
+# Code::Blocks build & workspace files
+bin/
+obj/
+*.depend
+*.layout
+*.o
+*.exe
