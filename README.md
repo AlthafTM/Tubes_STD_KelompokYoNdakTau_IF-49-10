@@ -1,18 +1,18 @@
-# Tubes_STD_KelompokYoNdakTau_IF-49-10
+# Tugas Besar Struktur Data
 
-**Tugas Besar Struktur Data — Kelompok YoNdakTau**  
+**Kelompok Yo Ndak Tau**  
+**IF-49-10**
+
 Program Studi S1 Informatika, Fakultas Informatika, Telkom University  
-Kelas IF-49-10 · Semester Ganjil 2026/2027
-
----
+Semester Ganjil 2026/2027
 
 ## Topik
 
-**Penjualan Tiket Bioskop**
+Penjualan Tiket Bioskop
 
 ## Deskripsi Aplikasi
 
-Aplikasi berbasis CLI (*Command Line Interface*) menggunakan bahasa C++ untuk mengelola sistem **Penjualan Tiket Bioskop**. Program ini mengimplementasikan struktur data **Multi Linked List (MLL)** untuk merepresentasikan serta mengelola hubungan antar data dalam proses penjualan tiket bioskop secara terstruktur.
+Aplikasi berbasis CLI menggunakan bahasa C++ untuk Tugas Besar Mata Kuliah Struktur Data dengan topik Penjualan Tiket Bioskop. Program ini menggunakan struktur data Multi Linked List (MLL) untuk mengelola data dalam sistem penjualan tiket bioskop.
 
 ## Anggota Kelompok
 
@@ -24,18 +24,18 @@ Aplikasi berbasis CLI (*Command Line Interface*) menggunakan bahasa C++ untuk me
 
 ## Struktur Data
 
-- **Multi Linked List (MLL)** — diimplementasikan dalam C++ (`mll.h` dan `mll.cpp`).
+Multi Linked List (MLL) menggunakan bahasa C++ (`mll.h` dan `mll.cpp`).
 
 ## Fitur
 
 ### Fungsionalitas Umum
-_Menyusul sesuai rancangan pada Laporan Tahap 1._
+Menyusul sesuai rancangan pada Laporan Tahap 1.
 
 ### Fungsionalitas Khusus
-_Menyusul sesuai rancangan pada Laporan Tahap 1._
+Menyusul sesuai rancangan pada Laporan Tahap 1.
 
 ### Fungsionalitas Saran (Opsional)
-_Menyusul._
+Menyusul.
 
 ## Struktur Repository
 
@@ -51,20 +51,13 @@ Tubes_STD_KelompokYoNdakTau_IF-49-10/
 
 ## Cara Menjalankan
 
-_Implementasi program masih dalam tahap pengembangan._ Setelah selesai, program dapat dikompilasi dan dijalankan menggunakan `g++`:
+Implementasi program masih dalam tahap pengembangan. Setelah selesai, program bisa dikompilasi dan dijalankan dengan `g++`:
 
 ```bash
 g++ src/main.cpp src/mll.cpp -o main
 ./main
 ```
 
-## Progres
-
-- [ ] Laporan Tahap 1 (deadline 29 November 2026)
-- [ ] Laporan Tahap 2 (13 Desember 2026)
-- [ ] Implementasi program
-- [ ] Presentasi dan demo
-
 ## Lisensi
 
-Proyek ini dilisensikan di bawah [MIT License](LICENSE).
+Proyek ini menggunakan [MIT License](LICENSE).
