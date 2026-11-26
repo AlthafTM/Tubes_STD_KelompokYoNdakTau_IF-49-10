@@ -6,71 +6,118 @@
 
 using namespace std;
 
-struct elemenFilm;
+struct elemenJadwal;
+struct elemenMember;
 struct elemenTiket;
 
-typedef elemenFilm* adrFilm;
-typedef elemenTiket* adrTiket;
+typedef elemenJadwal* adrJadwal;
+typedef elemenMember* adrMember;
+typedef elemenTiket*  adrTiket;
 
-struct Film {
-    string idFilm;
-    string judul;
-    string jadwal;
+struct Jadwal {
+    string kode;
+    string judulFilm;
     string studio;
-    int hargaTiket;
+    string jamTayang;
+    int kapasitas;
+};
+
+struct Member {
+    string idMember;
+    string nama;
+    int poin;
 };
 
 struct Tiket {
     string kodeTiket;
-    string namaPembeli;
-    string nomorKursi;
+    int nomorKursi;
+    int harga;
 };
 
-struct elemenFilm {
-    Film info;
-    adrFilm next;
-    adrFilm prev;
-    adrTiket firstTiket;
+struct elemenJadwal {
+    Jadwal info;
+    adrJadwal next;
+};
+
+struct elemenMember {
+    Member info;
+    adrMember next;
 };
 
 struct elemenTiket {
     Tiket info;
+    adrJadwal jadwal;
+    adrMember member;
     adrTiket next;
-    adrTiket prev;
 };
 
-struct ListFilm {
-    adrFilm first;
-    adrFilm last;
+struct ListJadwal {
+    adrJadwal first;
+    adrJadwal last;
 };
 
-void createListFilm(ListFilm &L);
-bool isEmptyFilm(ListFilm L);
-bool isEmptyTiket(adrFilm p);
+struct ListMember {
+    adrMember first;
+};
 
-adrFilm createElemenFilm(string idFilm, string judul, string jadwal, string studio, int hargaTiket);
-adrTiket createElemenTiket(string kodeTiket, string namaPembeli, string nomorKursi);
+struct ListTiket {
+    adrTiket first;
+    adrTiket last;
+};
 
-void insertFirstFilm(ListFilm &L, adrFilm p);
-void insertLastFilm(ListFilm &L, adrFilm p);
-void insertAfterFilm(ListFilm &L, adrFilm prec, adrFilm p);
+void createListJadwal(ListJadwal &L);
+void createListMember(ListMember &L);
+void createListTiket(ListTiket &L);
 
-void insertFirstTiket(adrFilm &p, adrTiket q);
-void insertLastTiket(adrFilm &p, adrTiket q);
-void insertAfterTiket(adrFilm &p, adrTiket prec, adrTiket q);
+bool isEmptyJadwal(ListJadwal L);
+bool isEmptyMember(ListMember L);
+bool isEmptyTiket(ListTiket L);
 
-void deleteFirstFilm(ListFilm &L, adrFilm &p);
-void deleteLastFilm(ListFilm &L, adrFilm &p);
-void deleteAfterFilm(ListFilm &L, adrFilm prec, adrFilm &p);
+adrJadwal createElemenJadwal(const string &kode, const string &judulFilm,
+                             const string &studio, const string &jamTayang, int kapasitas);
+adrMember createElemenMember(const string &idMember, const string &nama, int poin);
+adrTiket createElemenTiket(const string &kodeTiket, int nomorKursi, int harga,
+                           adrJadwal pJadwal, adrMember pMember);
 
-void deleteFirstTiket(adrFilm &p, adrTiket &q);
-void deleteLastTiket(adrFilm &p, adrTiket &q);
-void deleteAfterTiket(adrFilm &p, adrTiket prec, adrTiket &q);
-void deleteAllTiket(adrFilm &p);
+void insertLastJadwal(ListJadwal &L, adrJadwal p);
+void insertFirstMember(ListMember &L, adrMember p);
+void insertLastTiket(ListTiket &L, adrTiket p);
 
-adrFilm searchFilm(ListFilm L, string idFilm);
-adrTiket searchTiket(adrFilm p, string kodeTiket);
+void deleteFirstJadwal(ListJadwal &L, adrJadwal &p);
+void deleteLastJadwal(ListJadwal &L, adrJadwal &p);
+void deleteAfterJadwal(ListJadwal &L, adrJadwal prec, adrJadwal &p);
 
-void displayListFilm(ListFilm L);
+void deleteFirstMember(ListMember &L, adrMember &p);
+void deleteLastMember(ListMember &L, adrMember &p);
+void deleteAfterMember(ListMember &L, adrMember prec, adrMember &p);
+
+void deleteFirstTiket(ListTiket &L, adrTiket &q);
+void deleteLastTiket(ListTiket &L, adrTiket &q);
+void deleteAfterTiket(ListTiket &L, adrTiket prec, adrTiket &q);
+
+void deleteJadwalTertentu(ListJadwal &L, adrJadwal target, adrJadwal &p);
+void deleteMemberTertentu(ListMember &L, adrMember target, adrMember &p);
+void deleteTiketTertentu(ListTiket &L, adrTiket target, adrTiket &q);
+
+void deleteTiketByJadwal(ListTiket &LT, adrJadwal pJadwal);
+void deleteTiketByMember(ListTiket &LT, adrMember pMember);
+void deleteJadwalBesertaRelasi(ListJadwal &LJ, ListTiket &LT, const string &kode, bool &berhasil);
+void deleteMemberBesertaRelasi(ListMember &LM, ListTiket &LT, const string &idMember, bool &berhasil);
+void deleteRelasi(ListTiket &LT, const string &kodeTiket, bool &berhasil);
+
+adrJadwal searchJadwal(ListJadwal L, const string &kode);
+adrMember searchMember(ListMember L, const string &idMember);
+adrTiket searchTiket(ListTiket L, const string &kodeTiket);
+adrTiket searchTiketKursi(ListTiket L, adrJadwal pJadwal, int nomorKursi);
+bool isRelasi(ListTiket L, adrJadwal pJadwal, adrMember pMember);
+
+int countMemberOfJadwal(ListTiket L, adrJadwal pJadwal);
+int countJadwalOfMember(ListTiket L, adrMember pMember);
+int countTiketOfJadwal(ListTiket L, adrJadwal pJadwal);
+
+void displayListJadwal(ListJadwal L);
+void displayListMember(ListMember L);
+void displayJadwalBesertaMember(ListJadwal LJ, ListTiket LT);
+void displayMemberBesertaJadwal(ListMember LM, ListTiket LT);
 
 #endif
