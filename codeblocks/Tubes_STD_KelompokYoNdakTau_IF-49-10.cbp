@@ -31,10 +31,11 @@
 		<Compiler>
 			<Add option="-Wall" />
 			<Add option="-fexceptions" />
+			<Add directory=".." />
 		</Compiler>
-		<Unit filename="main.cpp" />
-		<Unit filename="mll.cpp" />
-		<Unit filename="mll.h" />
+		<Unit filename="../main.cpp" />
+		<Unit filename="../mll.cpp" />
+		<Unit filename="../mll.h" />
 		<Extensions>
 			<lib_finder disable_auto="1" />
 		</Extensions>

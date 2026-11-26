@@ -44,18 +44,19 @@ Tubes_STD_KelompokYoNdakTau_IF-49-10/
 ├── .gitignore
 ├── LICENSE
 ├── README.md
-├── Tubes_STD_KelompokYoNdakTau_IF-49-10.cbp
 ├── main.cpp
 ├── mll.cpp
-└── mll.h
+├── mll.h
+└── codeblocks/
+    └── Tubes_STD_KelompokYoNdakTau_IF-49-10.cbp
 ```
 
 ## Cara Menjalankan
 
 ### Menggunakan Code::Blocks
 1. Download ZIP atau clone repository ini, lalu ekstrak jika menggunakan ZIP.
-2. Buka file `Tubes_STD_KelompokYoNdakTau_IF-49-10.cbp` menggunakan Code::Blocks.
-3. Setelah kode selesai diimplementasikan, klik **Build and Run** (`F9`).
+2. Buka file `codeblocks/Tubes_STD_KelompokYoNdakTau_IF-49-10.cbp` menggunakan Code::Blocks.
+3. Setelah kode selesai diimplementasikan, klik **Build and Run** (`F9`). Semua hasil build (`bin/` dan `obj/`) akan tersimpan di dalam folder `codeblocks/`.
 
 ### Menggunakan Terminal (`g++`)
 ```bash
