@@ -120,31 +120,11 @@ void displayListMember(ListMember L);
 void displayJadwalBesertaMember(ListJadwal LJ, ListTiket LT);
 void displayMemberBesertaJadwal(ListMember LM, ListTiket LT);
 
-// I.S. LJ, LM, LT terdefinisi; data input tiket (kodeTiket, kodeJadwal, idMember, nomorKursi, harga) diketahui.
-// F.S. Jika jadwal & member valid, kodeTiket unik, kapasitas mencukupi, dan kursi masih kosong,
-//      tiket baru ditambahkan ke LT dan poin loyalitas member bertambah +10.
-void beliTiket(ListJadwal &LJ, ListMember &LM, ListTiket &LT,
-               const string &kodeTiket, const string &kodeJadwal,
-               const string &idMember, int nomorKursi, int harga);
-
-// I.S. LT terdefinisi dan kodeTiket diketahui.
-// F.S. Jika kodeTiket ditemukan pada LT, poin loyalitas member pemilik tiket dikurangi 10 (minimal 0)
-//      dan elemen tiket dihapus dari LT.
+// tambahan
+void beliTiket(ListJadwal &LJ, ListMember &LM, ListTiket &LT,const string &kodeTiket, const string &kodeJadwal,const string &idMember, int nomorKursi, int harga);
 void batalkanTiket(ListTiket &LT, const string &kodeTiket);
-
-// I.S. LJ dan LT terdefinisi, kodeJadwal diketahui.
-// F.S. Menampilkan denah status seluruh kursi (Kosong atau Nama Member) pada jadwal tayang tersebut.
 void tampilkanDenahKursi(ListJadwal LJ, ListTiket LT, const string &kodeJadwal);
-
-// I.S. LT dan judulFilm terdefinisi.
-// F.S. Mengembalikan total jumlah tiket terjual untuk judulFilm tertentu.
 int hitungTiketJudulFilm(ListTiket LT, const string &judulFilm);
-
-// I.S. LJ, LM, dan LT terdefinisi.
-// F.S. Menampilkan film dengan jumlah penonton terbanyak serta member dengan poin loyalitas tertinggi.
 void laporanFilmDanTopMember(ListJadwal LJ, ListMember LM, ListTiket LT);
-
-// I.S. LJ, LM, dan LT dalam keadaan kosong.
-// F.S. Mengisi data awal simulasi jadwal tayang, member, dan transaksi tiket.
 void initDataDummy(ListJadwal &LJ, ListMember &LM, ListTiket &LT);
 #endif
