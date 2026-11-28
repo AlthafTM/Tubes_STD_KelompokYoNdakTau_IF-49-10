@@ -512,3 +512,160 @@ void displayMemberBesertaJadwal(ListMember LM, ListTiket LT) {
         }
     }
 }
+
+// ============================================================================
+// IMPLEMENTASI FUNGSIONALITAS KHUSUS & BANTUAN TOPIK 11
+// ============================================================================
+
+void beliTiket(ListJadwal &LJ, ListMember &LM, ListTiket &LT,
+               const string &kodeTiket, const string &kodeJadwal,
+               const string &idMember, int nomorKursi, int harga) {
+    adrJadwal pJadwal = searchJadwal(LJ, kodeJadwal);
+    adrMember pMember = searchMember(LM, idMember);
+
+    if (pJadwal == nullptr) {
+        cout << "[Gagal] Kode jadwal '" << kodeJadwal << "' tidak ditemukan." << endl;
+    } else if (pMember == nullptr) {
+        cout << "[Gagal] ID member '" << idMember << "' tidak ditemukan." << endl;
+    } else if (searchTiket(LT, kodeTiket) != nullptr) {
+        cout << "[Gagal] Kode tiket '" << kodeTiket << "' sudah digunakan." << endl;
+    } else if (nomorKursi < 1 || nomorKursi > pJadwal->info.kapasitas) {
+        cout << "[Gagal] Nomor kursi harus berada pada rentang 1 s.d. " << pJadwal->info.kapasitas << "." << endl;
+    } else if (countTiketOfJadwal(LT, pJadwal) >= pJadwal->info.kapasitas) {
+        cout << "[Gagal] Kapasitas kursi untuk jadwal ini sudah penuh." << endl;
+    } else if (searchTiketKursi(LT, pJadwal, nomorKursi) != nullptr) {
+        cout << "[Gagal] Kursi nomor " << nomorKursi << " sudah terisi pada jadwal ini." << endl;
+    } else {
+        adrTiket q = createElemenTiket(kodeTiket, nomorKursi, harga, pJadwal, pMember);
+        insertLastTiket(LT, q);
+        pMember->info.poin += 10;
+        cout << "[Berhasil] Tiket " << kodeTiket << " berhasil dibeli oleh "
+             << pMember->info.nama << " (Kursi " << nomorKursi
+             << " | Poin sekarang: " << pMember->info.poin << ")." << endl;
+    }
+}
+
+void batalkanTiket(ListTiket &LT, const string &kodeTiket) {
+    adrTiket q = searchTiket(LT, kodeTiket);
+    if (q == nullptr) {
+        cout << "[Gagal] Tiket dengan kode '" << kodeTiket << "' tidak ditemukan." << endl;
+    } else {
+        adrMember pMember = q->member;
+        string namaMember = pMember->info.nama;
+
+        if (pMember->info.poin >= 10) {
+            pMember->info.poin -= 10;
+        } else {
+            pMember->info.poin = 0;
+        }
+
+        bool berhasil = false;
+        deleteRelasi(LT, kodeTiket, berhasil);
+        if (berhasil) {
+            cout << "[Berhasil] Tiket " << kodeTiket << " dibatalkan. Poin "
+                 << namaMember << " dikurangi menjadi " << pMember->info.poin << "." << endl;
+        }
+    }
+}
+
+void tampilkanDenahKursi(ListJadwal LJ, ListTiket LT, const string &kodeJadwal) {
+    adrJadwal pJadwal = searchJadwal(LJ, kodeJadwal);
+    if (pJadwal == nullptr) {
+        cout << "[Gagal] Jadwal dengan kode '" << kodeJadwal << "' tidak ditemukan." << endl;
+    } else {
+        int terisi = countTiketOfJadwal(LT, pJadwal);
+        cout << "\n==================================================" << endl;
+        cout << "DENAH KURSI STUDIO " << pJadwal->info.studio << " - " << pJadwal->info.judulFilm << endl;
+        cout << "Jam Tayang : " << pJadwal->info.jamTayang
+             << " | Terisi : " << terisi << "/" << pJadwal->info.kapasitas << " kursi" << endl;
+        cout << "==================================================" << endl;
+        cout << "                 [ LAYAR BIOSKOP ]                \n" << endl;
+
+        int kursi = 1;
+        while (kursi <= pJadwal->info.kapasitas) {
+            adrTiket q = searchTiketKursi(LT, pJadwal, kursi);
+            string nomorStr = (kursi < 10 ? "0" : "") + to_string(kursi);
+            if (q == nullptr) {
+                cout << "[ " << nomorStr << ": Kosong ]\t";
+            } else {
+                cout << "[ " << nomorStr << ": " << q->member->info.nama << " ]\t";
+            }
+
+            if (kursi % 4 == 0) {
+                cout << endl;
+            }
+            kursi++;
+        }
+        cout << endl;
+    }
+}
+
+int hitungTiketJudulFilm(ListTiket LT, const string &judulFilm) {
+    int total = 0;
+    adrTiket q = LT.first;
+    while (q != nullptr) {
+        if (q->jadwal->info.judulFilm == judulFilm) {
+            total++;
+        }
+        q = q->next;
+    }
+    return total;
+}
+
+void laporanFilmDanTopMember(ListJadwal LJ, ListMember LM, ListTiket LT) {
+    cout << "\n=== LAPORAN FILM TERLARIS & TOP MEMBER ===" << endl;
+
+    if (isEmptyJadwal(LJ)) {
+        cout << "Film Terlaris : (Belum ada data jadwal tayang)" << endl;
+    } else {
+        adrJadwal p = LJ.first;
+        string filmTerlaris = p->info.judulFilm;
+        int maxPenonton = hitungTiketJudulFilm(LT, p->info.judulFilm);
+
+        p = p->next;
+        while (p != nullptr) {
+            int jumlah = hitungTiketJudulFilm(LT, p->info.judulFilm);
+            if (jumlah > maxPenonton) {
+                maxPenonton = jumlah;
+                filmTerlaris = p->info.judulFilm;
+            }
+            p = p->next;
+        }
+
+        if (maxPenonton == 0) {
+            cout << "Film Terlaris : Belum ada tiket yang terjual." << endl;
+        } else {
+            cout << "Film Terlaris : " << filmTerlaris << " (" << maxPenonton << " penonton)" << endl;
+        }
+    }
+
+    if (isEmptyMember(LM)) {
+        cout << "Top Member    : (Belum ada data member)" << endl;
+    } else {
+        adrMember m = LM.first;
+        adrMember topMember = m;
+        m = m->next;
+        while (m != nullptr) {
+            if (m->info.poin > topMember->info.poin) {
+                topMember = m;
+            }
+            m = m->next;
+        }
+        cout << "Top Member    : " << topMember->info.nama << " (" << topMember->info.idMember
+             << ") - " << topMember->info.poin << " poin" << endl;
+    }
+}
+
+void initDataDummy(ListJadwal &LJ, ListMember &LM, ListTiket &LT) {
+    insertLastJadwal(LJ, createElemenJadwal("J01", "Interstellar", "1", "14:00", 12));
+    insertLastJadwal(LJ, createElemenJadwal("J02", "Dune: Part Two", "2", "16:30", 16));
+    insertLastJadwal(LJ, createElemenJadwal("J03", "Oppenheimer", "3", "19:00", 12));
+
+    insertFirstMember(LM, createElemenMember("M01", "Andi", 20));
+    insertFirstMember(LM, createElemenMember("M02", "Budi", 10));
+    insertFirstMember(LM, createElemenMember("M03", "Citra", 30));
+
+    beliTiket(LJ, LM, LT, "T01", "J01", "M01", 1, 50000);
+    beliTiket(LJ, LM, LT, "T02", "J01", "M03", 2, 50000);
+    beliTiket(LJ, LM, LT, "T03", "J02", "M02", 5, 60000);
+}
